@@ -28,3 +28,17 @@ chrome.storage.sync.get({
     });
   }
 });
+
+setInterval(() => {
+  chrome.storage.local.get({
+    "ekillHitlist": "{}"
+  }, item => {
+    let ekillHitlist = JSON.parse(item.ekillHitlist)
+    for(let host in ekillHitlist){
+      for(let path in ekillHitlist[host]){
+        chrome.browserAction.setBadgeBackgroundColor({ color: "#000000" });
+        chrome.browserAction.setBadgeText({text: ekillHitlist[host][path].length.toString()});
+      }
+    }
+  });
+}, 5000);
